@@ -2,9 +2,12 @@
 
 namespace Divido\MerchantSDKGuzzle5;
 
+use Divido\MerchantSDK\HttpClient\IHttpClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\Request;
-use GuzzleHttp\Url;
+use GuzzleHttp\Psr7\Response;
+use Psr\Http\Message\ResponseInterface;
+use Psr\Http\Message\UriInterface;
 
 /**
  * Class GuzzleAdapter
@@ -49,13 +52,15 @@ class GuzzleAdapter implements IHttpClient
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function get(Url $url, array $headers = [])
+    public function get(UriInterface $url, array $headers = [])
     {
-        return $this->getClient()->send(
+        $result = $this->getClient()->send(
             new Request('GET', $url, $headers), [
                 'http_errors' => false,
             ]
         );
+
+        return $this->response($result);
     }
 
     /**
@@ -69,13 +74,15 @@ class GuzzleAdapter implements IHttpClient
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function post(Url $url, array $headers = [], $payload = '')
+    public function post(UriInterface $url, array $headers = [], $payload = '')
     {
-        return $this->getClient()->send(
+        $result = $this->getClient()->send(
             new Request('POST', $url, $headers, $payload), [
                 'http_errors' => false,
             ]
         );
+
+        return $this->response($result);
     }
 
     /**
@@ -88,13 +95,15 @@ class GuzzleAdapter implements IHttpClient
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function delete(Url $url, array $headers = [])
+    public function delete(UriInterface $url, array $headers = [])
     {
-        return $this->getClient()->send(
+        $result = $this->getClient()->send(
             new Request('DELETE', $url, $headers), [
                 'http_errors' => false,
             ]
         );
+
+        return $this->response($result);
     }
 
     /**
@@ -108,13 +117,15 @@ class GuzzleAdapter implements IHttpClient
      *
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function patch(Url $url, array $headers = [], $payload = '')
+    public function patch(UriInterface $url, array $headers = [], $payload = '')
     {
-        return $this->getClient()->send(
+        $result = $this->getClient()->send(
             new Request('PATCH', $url, $headers, $payload), [
                 'http_errors' => false,
             ]
         );
+
+        return $this->response($result);
     }
 
     ########################################################
@@ -139,5 +150,15 @@ class GuzzleAdapter implements IHttpClient
     private function getClient()
     {
         return $this->client;
+    }
+
+    /**
+     * Returns a new Psr Response object
+     *
+     * @return Response
+     */
+    private function response(\GuzzleHttp\Message\Response $result)
+    {
+        return new Response($result->getStatusCode(), $result->getHeaders(), $result->getBody());
     }
 }
