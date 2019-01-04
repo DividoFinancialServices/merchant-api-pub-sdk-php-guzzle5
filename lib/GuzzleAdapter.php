@@ -6,6 +6,7 @@ use Divido\MerchantSDK\HttpClient\IHttpClient;
 use GuzzleHttp\ClientInterface;
 use GuzzleHttp\Message\Request;
 use GuzzleHttp\Psr7\Response;
+use GuzzleHttp\Stream\Stream;
 use Psr\Http\Message\ResponseInterface;
 use Psr\Http\Message\UriInterface;
 
@@ -76,6 +77,8 @@ class GuzzleAdapter implements IHttpClient
      */
     public function post(UriInterface $url, array $headers = [], $payload = '')
     {
+        $payload = Stream::factory($payload);
+
         $result = $this->getClient()->send(
             new Request('POST', $url, $headers, $payload), [
                 'http_errors' => false,
@@ -119,6 +122,8 @@ class GuzzleAdapter implements IHttpClient
      */
     public function patch(UriInterface $url, array $headers = [], $payload = '')
     {
+        $payload = Stream::factory($payload);
+
         $result = $this->getClient()->send(
             new Request('PATCH', $url, $headers, $payload), [
                 'http_errors' => false,
