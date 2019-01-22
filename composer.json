@@ -11,12 +11,6 @@
             "email": "mike.lovely@divido.com"
         }
     ],
-    "repositories": [
-        {
-            "type": "vcs",
-            "url": "git@github.com:dividohq/merchant-api-pub-sdk-php.git"
-        }
-    ],
     "autoload": {
         "psr-4": {
             "Divido\\MerchantSDKGuzzle5\\": "lib/"
@@ -35,7 +29,7 @@
         "psr/http-message": "^1.0",
         "guzzlehttp/psr7": "^1.5",
         "guzzlehttp/guzzle": "~5.0",
-        "divido/merchant-sdk": "dev-master"
+        "divido/merchant-sdk": "^2.0"
     },
     "require-dev": {
         "phpunit/phpunit": "^5",
