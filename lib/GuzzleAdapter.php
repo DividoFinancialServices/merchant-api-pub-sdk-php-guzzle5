@@ -44,6 +44,27 @@ class GuzzleAdapter implements IHttpClient
     }
 
     /**
+     * Submit an HTTP HEAD request
+     *
+     * @param Url $url The url to send the request to $uri
+     * @param array $headers A key/value pair array of headers to send with the request
+     *
+     * @return ResponseInterface The HTTP response (PSR implementation)
+     *
+     * @throws \GuzzleHttp\Exception\GuzzleException
+     */
+    public function head(UriInterface $url, array $headers = [])
+    {
+        $result = $this->getClient()->send(
+            new Request('HEAD', $url, $headers), [
+                'http_errors' => false,
+            ]
+        );
+
+        return $this->response($result);
+    }
+    
+    /**
      * Submit an HTTP GET request
      *
      * @param Url $url The url to send the request to $uri
