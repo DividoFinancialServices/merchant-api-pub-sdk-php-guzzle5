@@ -17,9 +17,8 @@ class HttpClientWrapperTest extends TestCase
         $baseUrl = 'https://merchant-api-testing-divido-foo';
         $apiKey = 'foo';
         $path = '/applications';
-        $query = [];
 
-        $uri = new Uri($baseUrl . $path . (empty($query) ? '' : '?' . http_build_query($query, '', '&')));
+        $uri = new Uri($baseUrl . $path);
         $request = new Request('GET', $uri, ['X-Divido-Api-Key' => $apiKey]);
 
         $payload = Stream::factory('{"foo":"bar"}');
@@ -42,9 +41,8 @@ class HttpClientWrapperTest extends TestCase
         $baseUrl = 'https://merchant-api-testing-divido-foo';
         $apiKey = 'foo';
         $path = '/applications';
-        $query = [];
 
-        $uri = new Uri($baseUrl . $path . (empty($query) ? '' : '?' . http_build_query($query, '', '&')));
+        $uri = new Uri($baseUrl . $path);
         $payload = Stream::factory('{"foo":"bar"}');
         $request = new Request('POST', $uri, ['X-Divido-Api-Key' => $apiKey], $payload);
 
@@ -66,9 +64,8 @@ class HttpClientWrapperTest extends TestCase
         $baseUrl = 'https://merchant-api-testing-divido-foo';
         $apiKey = 'foo';
         $path = '/applications/1';
-        $query = [];
 
-        $uri = new Uri($baseUrl . $path . (empty($query) ? '' : '?' . http_build_query($query, '', '&')));
+        $uri = new Uri($baseUrl . $path);
         $request = new Request('POST', $uri, ['X-Divido-Api-Key' => $apiKey], null);
 
         $mock_Client = \Mockery::spy(Guzzle::class);
@@ -88,9 +85,8 @@ class HttpClientWrapperTest extends TestCase
         $baseUrl = 'https://merchant-api-testing-divido-foo';
         $apiKey = 'foo';
         $path = '/applications/1';
-        $query = [];
 
-        $uri = new Uri($baseUrl . $path . (empty($query) ? '' : '?' . http_build_query($query, '', '&')));
+        $uri = new Uri($baseUrl . $path);
         $payload = Stream::factory('{"foo":"bar"}');
         $request = new Request('PATCH', $uri, ['X-Divido-Api-Key' => $apiKey], $payload);
 
